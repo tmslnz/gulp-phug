@@ -1,0 +1,31 @@
+{
+  "name": "gulp-tale-jade",
+  "version": "1.0.0",
+  "description": "Jade to PHP template compiler using Tale-Jade",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tmslnz/gulp-tale-jade.git"
+  },
+  "keywords": [
+    "gulp",
+    "php",
+    "pug",
+    "jade",
+    "templates",
+    "tale-jade"
+  ],
+  "author": "tmslnz <t@theworkers.net> (http://theworkers.net/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tmslnz/gulp-tale-jade/issues"
+  },
+  "homepage": "https://github.com/tmslnz/gulp-tale-jade#readme",
+  "dependencies": {
+    "gulp-util": "^3.0.8",
+    "through2": "^2.0.3"
+  }
+}
