@@ -29,7 +29,7 @@ function compile(file, callback) {
       return callback(err, file);
     }
     file.contents = result;
-    file.path = file.path.replace(/\.(php\.)?(jade|jd)$/, '.php');
+    file.path = file.path.replace(/\.(php\.)?(jade|jd|pug)$/, '.php');
     return callback(null, file);
   });
 }
