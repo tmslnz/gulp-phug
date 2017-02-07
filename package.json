@@ -1,6 +1,6 @@
 {
   "name": "gulp-tale-jade",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Jade to PHP template compiler using Tale-Jade",
   "main": "index.js",
   "scripts": {
