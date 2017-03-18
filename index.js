@@ -3,13 +3,20 @@ const gutil = require('gulp-util');
 const spawn = require( 'child_process' ).spawn;
 const PLUGIN_NAME = 'gulp-tale-jade';
 
-function compile(file, callback) {
-  var command = spawn( 'php', [
+function compile(file, callback, options) {
+
+  var args = [
     __dirname + '/support/compile-jade.php',
     '--file', file.path,
-    '--pretty',
-    '--standalone'
-  ]);
+  ];
+
+  for (var key in options) {
+    if (options[key]) {
+      args.push( '--' + key );
+    }
+  }
+
+  var command = spawn( 'php', args);
   
   var result = new Buffer('');
   
@@ -34,7 +41,9 @@ function compile(file, callback) {
   });
 }
 
-function gulpTaleJade() {
+function gulpTaleJade(options) {
+
+  options = options || {};
 
   return through.obj(function(file, enc, cb) {
     
@@ -43,7 +52,7 @@ function gulpTaleJade() {
     }
 
     if (file.isBuffer()) {
-      return compile(file, cb);
+      return compile(file, cb, options);
     }
 
     if (file.isStream()) {
