@@ -6,7 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Tale\\Jade\\' => array($vendorDir . '/talesoft/tale-jade'),
+    'Tale\\Pug\\' => array($vendorDir . '/talesoft/tale-pug'),
     'Tale\\' => array($vendorDir . '/talesoft/tale-factory', $vendorDir . '/talesoft/tale-config'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
 );

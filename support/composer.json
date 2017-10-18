@@ -1,5 +1,5 @@
 {
     "require": {
-        "talesoft/tale-jade": "*"
+        "talesoft/tale-pug": "*"
     }
 }

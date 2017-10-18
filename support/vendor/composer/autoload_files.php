@@ -7,6 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => $vendorDir . '/symfony/polyfill-mbstring/bootstrap.php',
-    '8a6a8c267d3359348147795da5d0a0be' => $vendorDir . '/talesoft/tale-jade/functions.php',
-    '8f05212d229af1458417046583af3482' => $vendorDir . '/talesoft/tale-jade/Compiler/functions.php',
+    '05088940abe8e9da5c10f8b06a5d00e1' => $vendorDir . '/talesoft/tale-pug/functions.php',
+    'cd7e3444b1c4ce241c4b5ad3d9c77c1d' => $vendorDir . '/talesoft/tale-pug/Compiler/functions.php',
 );

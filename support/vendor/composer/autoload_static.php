@@ -8,14 +8,14 @@ class ComposerStaticInit869895090c66f928b13a1b563af68ced
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-        '8a6a8c267d3359348147795da5d0a0be' => __DIR__ . '/..' . '/talesoft/tale-jade/functions.php',
-        '8f05212d229af1458417046583af3482' => __DIR__ . '/..' . '/talesoft/tale-jade/Compiler/functions.php',
+        '05088940abe8e9da5c10f8b06a5d00e1' => __DIR__ . '/..' . '/talesoft/tale-pug/functions.php',
+        'cd7e3444b1c4ce241c4b5ad3d9c77c1d' => __DIR__ . '/..' . '/talesoft/tale-pug/Compiler/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         'T' => 
         array (
-            'Tale\\Jade\\' => 10,
+            'Tale\\Pug\\' => 9,
             'Tale\\' => 5,
         ),
         'S' => 
@@ -25,9 +25,9 @@ class ComposerStaticInit869895090c66f928b13a1b563af68ced
     );
 
     public static $prefixDirsPsr4 = array (
-        'Tale\\Jade\\' => 
+        'Tale\\Pug\\' => 
         array (
-            0 => __DIR__ . '/..' . '/talesoft/tale-jade',
+            0 => __DIR__ . '/..' . '/talesoft/tale-pug',
         ),
         'Tale\\' => 
         array (

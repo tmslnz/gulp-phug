@@ -1,12 +1,12 @@
 const through = require('through2');
 const gutil = require('gulp-util');
 const spawn = require( 'child_process' ).spawn;
-const PLUGIN_NAME = 'gulp-tale-jade';
+const PLUGIN_NAME = 'gulp-tale-pug';
 
 function compile(file, callback, options) {
 
   var args = [
-    __dirname + '/support/compile-jade.php',
+    __dirname + '/support/compile-pug.php',
     '--file', file.path,
   ];
 
@@ -17,13 +17,13 @@ function compile(file, callback, options) {
   }
 
   var command = spawn( 'php', args);
-  
+
   var result = new Buffer('');
-  
+
   command.stdout.on('data', function(data) {
     result = Buffer.concat([result, new Buffer( data.toString() )]);
   });
-  
+
   command.stderr.on('data', function(data) {
     result = Buffer.concat([result, new Buffer( data.toString() )]);
   });
@@ -36,17 +36,17 @@ function compile(file, callback, options) {
       return callback(err, file);
     }
     file.contents = result;
-    file.path = file.path.replace(/\.(php\.)?(jade|jd)$/, '.php');
+    file.path = file.path.replace(/\.(php\.)?(jade|jd|pug)$/, '.php');
     return callback(null, file);
   });
 }
 
-function gulpTaleJade(options) {
+function gulpTalePug(options) {
 
   options = options || {};
 
   return through.obj(function(file, enc, cb) {
-    
+
     if (file.isNull()) {
       return cb(null, file);
     }
@@ -63,4 +63,4 @@ function gulpTaleJade(options) {
 
 }
 
-module.exports = gulpTaleJade;
+module.exports = gulpTalePug;
