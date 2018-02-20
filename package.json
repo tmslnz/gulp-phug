@@ -1,6 +1,6 @@
 {
   "name": "gulp-tale-pug",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Pug to PHP template compiler using Tale-Pug (formerly Tale-Jade)",
   "main": "index.js",
   "scripts": {

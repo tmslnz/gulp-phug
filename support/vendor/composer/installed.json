@@ -1,17 +1,17 @@
 [
     {
         "name": "symfony/polyfill-mbstring",
-        "version": "v1.5.0",
-        "version_normalized": "1.5.0.0",
+        "version": "v1.7.0",
+        "version_normalized": "1.7.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-mbstring.git",
-            "reference": "7c8fae0ac1d216eb54349e6a8baa57d515fe8803"
+            "reference": "78be803ce01e55d3491c1397cf1c64beb9c1b63b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/7c8fae0ac1d216eb54349e6a8baa57d515fe8803",
-            "reference": "7c8fae0ac1d216eb54349e6a8baa57d515fe8803",
+            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/78be803ce01e55d3491c1397cf1c64beb9c1b63b",
+            "reference": "78be803ce01e55d3491c1397cf1c64beb9c1b63b",
             "shasum": ""
         },
         "require": {
@@ -20,11 +20,11 @@
         "suggest": {
             "ext-mbstring": "For best performance"
         },
-        "time": "2017-06-14T15:44:48+00:00",
+        "time": "2018-01-30T19:27:44+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.5-dev"
+                "dev-master": "1.7-dev"
             }
         },
         "installation-source": "dist",
@@ -58,48 +58,6 @@
             "polyfill",
             "portable",
             "shim"
-        ]
-    },
-    {
-        "name": "talesoft/tale-factory",
-        "version": "0.1",
-        "version_normalized": "0.1.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/Talesoft/tale-factory.git",
-            "reference": "63335da0e6b435aa481ea2917b017cf482efa043"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/Talesoft/tale-factory/zipball/63335da0e6b435aa481ea2917b017cf482efa043",
-            "reference": "63335da0e6b435aa481ea2917b017cf482efa043",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.5.0"
-        },
-        "time": "2016-05-20T21:20:47+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Tale\\": ""
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Torben Koehn",
-                "email": "tk@talesoft.io"
-            }
-        ],
-        "description": "A small and lightweight implementation of the factory pattern",
-        "homepage": "http://docs.talesoft.io/tale-framework/tale/factory",
-        "keywords": [
-            "factory"
         ]
     },
     {
@@ -153,6 +111,48 @@
         "keywords": [
             "config",
             "options"
+        ]
+    },
+    {
+        "name": "talesoft/tale-factory",
+        "version": "0.1",
+        "version_normalized": "0.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Talesoft/tale-factory.git",
+            "reference": "63335da0e6b435aa481ea2917b017cf482efa043"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Talesoft/tale-factory/zipball/63335da0e6b435aa481ea2917b017cf482efa043",
+            "reference": "63335da0e6b435aa481ea2917b017cf482efa043",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.5.0"
+        },
+        "time": "2016-05-20T21:20:47+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Tale\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Torben Koehn",
+                "email": "tk@talesoft.io"
+            }
+        ],
+        "description": "A small and lightweight implementation of the factory pattern",
+        "homepage": "http://docs.talesoft.io/tale-framework/tale/factory",
+        "keywords": [
+            "factory"
         ]
     },
     {

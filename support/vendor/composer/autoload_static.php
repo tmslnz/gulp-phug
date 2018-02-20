@@ -31,8 +31,8 @@ class ComposerStaticInit869895090c66f928b13a1b563af68ced
         ),
         'Tale\\' => 
         array (
-            0 => __DIR__ . '/..' . '/talesoft/tale-factory',
-            1 => __DIR__ . '/..' . '/talesoft/tale-config',
+            0 => __DIR__ . '/..' . '/talesoft/tale-config',
+            1 => __DIR__ . '/..' . '/talesoft/tale-factory',
         ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
