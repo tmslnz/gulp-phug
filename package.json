@@ -1,7 +1,7 @@
 {
-  "name": "gulp-tale-pug",
-  "version": "1.2.1",
-  "description": "Pug to PHP template compiler using Tale-Pug (formerly Tale-Jade)",
+  "name": "gulp-phug",
+  "version": "1.3.0",
+  "description": "Pug to PHP template compiler using phug",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
