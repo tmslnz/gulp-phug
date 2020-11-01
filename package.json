@@ -8,13 +8,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tmslnz/gulp-tale-pug.git"
+    "url": "git+https://github.com/tmslnz/gulp-phug.git"
   },
   "keywords": [
     "gulp",
+    "phug",
+    "pug-php",
     "php",
     "pug",
     "jade",
+    "jade-php",
     "templates",
     "tale-jade",
     "tale-pug"
@@ -22,11 +25,11 @@
   "author": "tmslnz <t@theworkers.net> (http://theworkers.net/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tmslnz/gulp-tale-pug/issues"
+    "url": "https://github.com/tmslnz/gulp-phug/issues"
   },
-  "homepage": "https://github.com/tmslnz/gulp-tale-pug#readme",
+  "homepage": "https://github.com/tmslnz/gulp-phug#readme",
   "dependencies": {
-    "gulp-util": "^3.0.8",
-    "through2": "^2.0.3"
+    "plugin-error": "^1.0.1",
+    "through2": "^4.0.2"
   }
 }

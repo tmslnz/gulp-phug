@@ -12,7 +12,7 @@ Example `gulpfile.js`:
 ```js
 const plumber = require( 'gulp-plumber' );
 const browsersync = require( 'browser-sync' ).create();
-const jade = require( 'gulp-tale-jade' );
+const jade = require( 'gulp-phug' );
 
 gulp.task( 'default', [ 'templates', /* … */ ] );
 
@@ -27,3 +27,7 @@ gulp.task( 'templates', function () {
         .pipe( gulp.dest( /* DESTINATION */ ) );
 });
 ```
+
+## Development Setup
+
+Uses `composer` which can be installed via Homebrew with `brew install composer`
