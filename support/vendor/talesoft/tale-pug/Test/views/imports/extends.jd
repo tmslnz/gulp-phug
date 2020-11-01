@@ -1,5 +1,0 @@
-
-extends includes/extended-file
-
-block content
-    p Passed content to extended file!

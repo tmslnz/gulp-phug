@@ -1,5 +1,5 @@
 {
     "require": {
-        "talesoft/tale-pug": "*"
+        "phug/phug": "^1.8"
     }
 }
