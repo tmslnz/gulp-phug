@@ -1,66 +1,52 @@
 const through = require('through2');
-const gutil = require('gulp-util');
 const spawn = require( 'child_process' ).spawn;
+const PluginError = require('plugin-error');
+
 const PLUGIN_NAME = 'gulp-tale-pug';
 
-function compile(file, callback, options) {
-
-  var args = [
-    __dirname + '/support/compile-pug.php',
-    '--file', file.path,
+const compile = (file, callback) => {
+  let args = [
+    __dirname + '/support/vendor/bin/phug',
+    'compileFile', file.path,
   ];
-
-  for (var key in options) {
-    if (options[key]) {
-      args.push( '--' + key );
-    }
-  }
-
-  var command = spawn( 'php', args);
-
-  var result = new Buffer('');
+  let command = spawn( 'php', args);
+  let result = Buffer.from('');
 
   command.stdout.on('data', function(data) {
-    result = Buffer.concat([result, new Buffer( data.toString() )]);
+    result = Buffer.concat([result, Buffer.from( data.toString() )]);
   });
 
   command.stderr.on('data', function(data) {
-    result = Buffer.concat([result, new Buffer( data.toString() )]);
+    result = Buffer.concat([result, Buffer.from( data.toString() )]);
   });
 
   command.on('close', function(code) {
     if (code > 0) {
-      var err = new gutil.PluginError(PLUGIN_NAME, {
-        message: result.toString()
-      });
+      let err = new PluginError(PLUGIN_NAME, result.toString());
       return callback(err, file);
     }
     file.contents = result;
-    file.path = file.path.replace(/\.(php\.)?(jade|jd|pug)$/, '.php');
+    file.path = file.path.replace(/\.(jade|jd|pug)$/, '.php');
     return callback(null, file);
   });
 }
 
-function gulpTalePug(options) {
-
-  options = options || {};
-
+const gulpPhug = (options = {}) => {
   return through.obj(function(file, enc, cb) {
-
-    if (file.isNull()) {
+    if (file.isNull()) return cb(null, file);
+    if (file.isStream()) return cb(new PluginError(PLUGIN_NAME, 'Streaming not supported'));
+    if (!file.contents.length) {
+      file.path = file.path.replace(/\.(jade|jd|pug)$/, '.php');
       return cb(null, file);
     }
-
-    if (file.isBuffer()) {
-      return compile(file, cb, options);
-    }
-
-    if (file.isStream()) {
-      return cb(new gutil.PluginError(PLUGIN_NAME, { message: 'No support for streams' }), file);
-    }
-
+    if (file.isBuffer()) return compile(file, cb, options);
   });
-
 }
 
-module.exports = gulpTalePug;
+gulpPhug.logError = function logError(error) {
+  const message = new PluginError('phug', error.messageFormatted).toString();
+  process.stderr.write(`${message}\n`);
+  this.emit('end');
+};
+
+module.exports = gulpPhug;

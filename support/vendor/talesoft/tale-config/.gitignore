@@ -1,9 +1,0 @@
-
-/.idea
-/vendor
-/docs
-
-.DS_Store
-Thumbs.db
-composer.lock
-phpdoc.xml
