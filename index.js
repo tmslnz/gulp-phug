@@ -2,7 +2,7 @@ const through = require('through2');
 const spawn = require( 'child_process' ).spawn;
 const PluginError = require('plugin-error');
 
-const PLUGIN_NAME = 'gulp-tale-pug';
+const PLUGIN_NAME = 'gulp-phug';
 
 const compile = (file, callback) => {
   let args = [
