@@ -6,7 +6,7 @@ const PLUGIN_NAME = 'gulp-phug';
 
 const compile = (file, callback) => {
   let args = [
-    __dirname + '/support/vendor/bin/phug',
+    __dirname + '/support/vendor/phug/phug/phug',
     'compileFile', file.path,
   ];
   let command = spawn( 'php', args);
