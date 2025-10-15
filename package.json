@@ -1,6 +1,6 @@
 {
   "name": "gulp-phug",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "Pug to PHP template compiler using phug",
   "main": "index.js",
   "bin": "./support/vendor/phug/phug/phug",
