@@ -7,6 +7,7 @@ const PLUGIN_NAME = 'gulp-phug';
 
 const compile = (file, callback, options) => {
   let args = [
+    '-d', 'error_reporting=E_ERROR',
     path.join(__dirname, 'support', 'vendor', 'phug', 'phug', 'phug'),
     'compileFile', file.path,
   ];
