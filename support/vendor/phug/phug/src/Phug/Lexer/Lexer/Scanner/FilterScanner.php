@@ -7,16 +7,18 @@
 namespace Phug\Lexer\Scanner;
 
 use Phug\Lexer\Analyzer\LineAnalyzer;
+use Phug\Lexer\Scanner\Partial\TrailingOutdentHandlerTrait;
 use Phug\Lexer\ScannerInterface;
 use Phug\Lexer\State;
 use Phug\Lexer\Token\FilterToken;
 use Phug\Lexer\Token\IndentToken;
 use Phug\Lexer\Token\NewLineToken;
-use Phug\Lexer\Token\OutdentToken;
 use Phug\Lexer\Token\TextToken;
 
 class FilterScanner implements ScannerInterface
 {
+    use TrailingOutdentHandlerTrait;
+
     public function scan(State $state)
     {
         $reader = $state->getReader();
@@ -55,7 +57,7 @@ class FilterScanner implements ScannerInterface
             $token = $state->createToken(TextToken::class);
             if ($maxIndent > 0 && $maxIndent < INF) {
                 foreach ($lines as &$line) {
-                    $line = mb_substr($line, $maxIndent) ?: '';
+                    $line = mb_substr((string) $line, $maxIndent);
                 }
             }
             $token->setValue(implode("\n", $lines));
@@ -66,14 +68,8 @@ class FilterScanner implements ScannerInterface
             $token->getSourceLocation()->setOffsetLength(1); //Let it have at least 1 length for debugging
             yield $token;
 
-            if ($reader->hasLength()) {
-                yield $state->createToken(NewLineToken::class);
-
-                $state->setLevel($analyzer->getNewLevel())->indent($analyzer->getLevel() + 1);
-
-                while ($state->nextOutdent() !== false) {
-                    yield $state->createToken(OutdentToken::class);
-                }
+            foreach ($this->yieldTrailingOutdent($analyzer, $state) as $token) {
+                yield $token;
             }
         }
     }

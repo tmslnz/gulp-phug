@@ -364,8 +364,8 @@ class FileAdapter extends AbstractAdapter implements CacheInterface, LocatorInte
      * Return true if the file or content is up to date in the cache folder,
      * false else.
      *
-     * @param &string $path  to be filled
-     * @param string  $input file or pug code
+     * @param string &$path to be filled
+     * @param string $input file or pug code
      *
      * @return bool
      */
@@ -389,18 +389,35 @@ class FileAdapter extends AbstractAdapter implements CacheInterface, LocatorInte
         return file_exists($path);
     }
 
-    private function getCacheDirectory()
+    private function readCacheDirectoryFromOptions()
     {
         $cacheFolder = $this->hasOption('cache_dir')
             ? $this->getOption('cache_dir')
             : null;
+
         if (!$cacheFolder && $cacheFolder !== false) {
             $cacheFolder = $this->getRenderer()->hasOption('cache_dir')
                 ? $this->getRenderer()->getOption('cache_dir')
                 : null;
         }
+
         if ($cacheFolder === true) {
-            $cacheFolder = $this->getOption('tmp_dir');
+            return $this->getOption('tmp_dir');
+        }
+
+        return $cacheFolder;
+    }
+
+    private function getCacheDirectory()
+    {
+        $cacheFolder = $this->readCacheDirectoryFromOptions();
+
+        if ($cacheFolder === null) {
+            throw new RuntimeException(
+                'You need to set "cache_dir" option to a writable location in order '.
+                'to use cache feature.',
+                7
+            );
         }
 
         if (!is_dir($cacheFolder) && !@mkdir($cacheFolder, 0777, true)) {

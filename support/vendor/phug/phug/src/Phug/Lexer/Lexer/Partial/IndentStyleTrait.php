@@ -23,7 +23,7 @@ trait IndentStyleTrait
     /**
      * Returns the currently used indentation style.
      *
-     * @return string
+     * @return string|null
      */
     public function getIndentStyle()
     {
@@ -36,13 +36,13 @@ trait IndentStyleTrait
      * The value needs to be one of the `Lexer::INDENT_*` constants, but you can also just
      * pass either a single space or a single tab for the respective style.
      *
-     * @param $indentStyle
+     * @param string|null $indentStyle
      *
      * @return $this
      */
     public function setIndentStyle($indentStyle)
     {
-        if (!in_array($indentStyle, [null, Lexer::INDENT_TAB, Lexer::INDENT_SPACE])) {
+        if (!in_array($indentStyle, [null, Lexer::INDENT_TAB, Lexer::INDENT_SPACE], true)) {
             throw new \InvalidArgumentException(
                 'indentStyle needs to be null or one of the INDENT_* constants of the lexer'
             );
@@ -56,7 +56,7 @@ trait IndentStyleTrait
     /**
      * Returns the currently used indentation width.
      *
-     * @return int
+     * @return int|null
      */
     public function getIndentWidth()
     {
@@ -68,7 +68,7 @@ trait IndentStyleTrait
      *
      * The value of this specifies if e.g. 2 spaces make up one indentation level or 4.
      *
-     * @param $indentWidth
+     * @param int|null $indentWidth
      *
      * @return $this
      */

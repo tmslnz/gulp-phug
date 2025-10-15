@@ -4,6 +4,7 @@ namespace Phug\Ast;
 
 use InvalidArgumentException;
 use Phug\AstException;
+use ReturnTypeWillChange;
 
 /**
  * Represents a node in a tree-like data structure.
@@ -369,7 +370,6 @@ class Node implements NodeInterface
         $level = $level ?: 0;
 
         foreach ($this->children as $child) {
-
             /** @var NodeInterface $child */
             if ($child->is($callback)) {
                 yield $child;
@@ -418,6 +418,7 @@ class Node implements NodeInterface
     /**
      * {@inheritdoc}
      */
+    #[ReturnTypeWillChange]
     public function getIterator()
     {
         foreach ($this->children as $child) {
@@ -428,6 +429,7 @@ class Node implements NodeInterface
     /**
      * {@inheritdoc}
      */
+    #[ReturnTypeWillChange]
     public function count()
     {
         return $this->getChildCount();
@@ -436,6 +438,7 @@ class Node implements NodeInterface
     /**
      * {@inheritdoc}
      */
+    #[ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return $this->hasChildAt($offset);
@@ -444,6 +447,7 @@ class Node implements NodeInterface
     /**
      * {@inheritdoc}
      */
+    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->getChildAt($offset);
@@ -452,6 +456,7 @@ class Node implements NodeInterface
     /**
      * {@inheritdoc}
      */
+    #[ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         if (!($value instanceof NodeInterface)) {
@@ -475,6 +480,7 @@ class Node implements NodeInterface
     /**
      * {@inheritdoc}
      */
+    #[ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         $this->removeChildAt($offset);

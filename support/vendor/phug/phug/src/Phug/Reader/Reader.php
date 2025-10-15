@@ -313,9 +313,9 @@ class Reader
      *
      * Notice that ^ is automatically prepended to the pattern.
      *
-     * @param string $pattern         the regular expression without slashes or modifiers.
-     * @param string $modifiers       the modifiers for the regular expression.
-     * @param string $ignoredSuffixes characters that are scanned, but don't end up in the consume length.
+     * @param string      $pattern         the regular expression without slashes or modifiers.
+     * @param string|null $modifiers       the modifiers for the regular expression.
+     * @param string|null $ignoredSuffixes characters that are scanned, but don't end up in the consume length.
      *
      * @throws ReaderException
      *
@@ -323,7 +323,7 @@ class Reader
      */
     public function match($pattern, $modifiers = null, $ignoredSuffixes = null)
     {
-        $modifiers = $modifiers ?: '';
+        $modifiers = (string) $modifiers;
         $ignoredSuffixes = $ignoredSuffixes ?: "\n";
         $matches = null;
         $this->lastMatchResult = null;
@@ -572,7 +572,7 @@ class Reader
      */
     public function peekSpace()
     {
-        return ctype_space($this->peek());
+        return ctype_space((string) $this->peek());
     }
 
     /**
@@ -584,7 +584,7 @@ class Reader
      */
     public function peekDigit()
     {
-        return ctype_digit($this->peek());
+        return ctype_digit((string) $this->peek());
     }
 
     /**
@@ -596,7 +596,7 @@ class Reader
      */
     public function peekAlpha()
     {
-        return ctype_alpha($this->peek());
+        return ctype_alpha((string) $this->peek());
     }
 
     /**
@@ -608,7 +608,7 @@ class Reader
      */
     public function peekAlphaNumeric()
     {
-        return ctype_alnum($this->peek());
+        return ctype_alnum((string) $this->peek());
     }
 
     /**
@@ -658,7 +658,7 @@ class Reader
      */
     public function readUntilNewLine()
     {
-        return $this->readUntil([$this, 'peekNewLine']);
+        return (string) $this->readUntil([$this, 'peekNewLine']);
     }
 
     /**

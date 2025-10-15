@@ -3,8 +3,23 @@
 namespace Phug\Util;
 
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
+use Phug\CompatibilityUtil\TestCaseTypeBase;
+use ReflectionMethod;
 
-class TestCase extends PHPUnitTestCase
+// @codeCoverageIgnoreStart
+if (!class_exists(TestCaseTypeBase::class)) {
+    $setUp = @new ReflectionMethod(PHPUnitTestCase::class, 'setUp');
+    $testCaseInitialization = true;
+
+    require $setUp && method_exists($setUp, 'hasReturnType') && $setUp->hasReturnType()
+        ? __DIR__.'/../CompatibilityUtil/TestCaseTyped.php'
+        : __DIR__.'/../CompatibilityUtil/TestCaseUntyped.php';
+
+    unset($testCaseInitialization);
+}
+// @codeCoverageIgnoreEnd
+
+class TestCase extends TestCaseTypeBase
 {
     /**
      * @var string
@@ -38,11 +53,39 @@ class TestCase extends PHPUnitTestCase
         }
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
+    public static function assertStringContains($needle, $haystack, $message = '')
+    {
+        if (!method_exists(self::class, 'assertStringContainsString')) {
+            self::assertContains($needle, $haystack, $message);
+
+            return;
+        }
+
+        self::assertStringContainsString($needle, $haystack, $message);
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public static function assertStringNotContains($needle, $haystack, $message = '')
+    {
+        if (!method_exists(self::class, 'assertStringNotContainsString')) {
+            self::assertNotContains($needle, $haystack, $message);
+
+            return;
+        }
+
+        self::assertStringNotContainsString($needle, $haystack, $message);
+    }
+
     protected function removeFile($file)
     {
         if (is_dir($file)) {
-            $this->emptyDirectory($file);
-            rmdir($file);
+            @$this->emptyDirectory($file);
+            @rmdir($file);
 
             return;
         }
@@ -67,7 +110,7 @@ class TestCase extends PHPUnitTestCase
     {
         if (file_exists($dir)) {
             if (is_dir($dir)) {
-                $this->emptyDirectory($dir);
+                @$this->emptyDirectory($dir);
 
                 return;
             }

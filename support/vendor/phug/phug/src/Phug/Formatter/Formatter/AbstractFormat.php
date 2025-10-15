@@ -51,7 +51,7 @@ abstract class AbstractFormat implements FormatInterface, OptionInterface
         is_object($_pug_temp = %s) && method_exists($_pug_temp, "__toBoolean")
             ? $_pug_temp->__toBoolean()
             : $_pug_temp';
-    const HTML_EXPRESSION_ESCAPE = 'htmlspecialchars(%s)';
+    const HTML_EXPRESSION_ESCAPE = 'htmlspecialchars((string) (%s))';
     const HTML_TEXT_ESCAPE = 'htmlspecialchars';
     const PAIR_TAG = '%s%s%s';
     const TRANSFORM_EXPRESSION = '%s';
@@ -233,7 +233,7 @@ abstract class AbstractFormat implements FormatInterface, OptionInterface
     /**
      * @param string|ElementInterface $element
      * @param bool                    $noDebug
-     * @param $element
+     * @param                         $element
      *
      * @return string
      */
@@ -248,7 +248,7 @@ abstract class AbstractFormat implements FormatInterface, OptionInterface
             if (is_a($element, $className)) {
                 $elementCode = $handler($element);
                 $debugCode = $debug ? $this->getDebugInfo($element) : '';
-                $glue = mb_strlen($debugCode) && in_array(mb_substr($elementCode, 0, 1), ["\n", "\r"])
+                $glue = mb_strlen($debugCode) && in_array(mb_substr($elementCode, 0, 1), ["\n", "\r"], true)
                     ? "\n"
                     : '';
 
@@ -460,13 +460,16 @@ abstract class AbstractFormat implements FormatInterface, OptionInterface
             return 'null';
         }
 
-        if ($value instanceof ExpressionElement &&
-            in_array(($code = strtolower($value->getValue())), ['true', 'false', 'null', 'undefined'])
-        ) {
-            return $code;
+        if ($value instanceof ExpressionElement) {
+            $code = strtolower($value->getValue());
+
+            if (in_array($code, ['true', 'false', 'null', 'undefined'], true)) {
+                return $code;
+            }
         }
 
         $code = $this->formatAssignmentValue($value);
+
         if ($value instanceof ExpressionElement && $value->isEscaped()) {
             return $this->exportHelper('array_escape', [$formattedName, $code]);
         }
@@ -767,7 +770,7 @@ abstract class AbstractFormat implements FormatInterface, OptionInterface
             '        }',
             '    }',
             '    foreach ($__pug_mixin_vars as $__pug_key => &$__pug_value) {',
-            '        if (!in_array($__pug_key, $__pug_names)) {',
+            '        if (!in_array($__pug_key, $__pug_names, true)) {',
             '            $$__pug_key = &$__pug_value;',
             '        }',
             '    }',
@@ -866,13 +869,13 @@ abstract class AbstractFormat implements FormatInterface, OptionInterface
             '$__pug_mixin_vars = [];',
             'foreach (array_keys(get_defined_vars()) as $__local_pug_key) {',
             '    if (mb_substr($__local_pug_key, 0, 6) === \'__pug_\' || '.
-                'in_array($__local_pug_key, [\'attributes\', \'block\', \''.$variablesVariable.'\'])) {',
+                'in_array($__local_pug_key, [\'attributes\', \'block\', \''.$variablesVariable.'\'], true)) {',
             '        continue;',
             '    }',
             '    $'.$variablesVariable.'[$__local_pug_key] = &$$__local_pug_key;',
             '    $__local_pug_ref = &$GLOBALS[$__local_pug_key];',
             '    $__local_pug_value = &$$__local_pug_key;',
-            '    if($__local_pug_ref !== $__local_pug_value){',
+            '    if ($__local_pug_ref !== $__local_pug_value) {',
             '        $__pug_mixin_vars[$__local_pug_key] = &$__local_pug_value;',
 
             '        continue;',
@@ -917,7 +920,7 @@ abstract class AbstractFormat implements FormatInterface, OptionInterface
                 '        }'."\n".
                 (
                     $variablesVariable
-                        ? '        if(isset($'.$variablesVariable.'[$__local_pug_key])){'."\n".
+                        ? '        if (isset($'.$variablesVariable.'[$__local_pug_key])) {'."\n".
                         '            $$__local_pug_key = &$'.$variablesVariable.'[$__local_pug_key];'."\n".
                         '            continue;'."\n".
                         '        }'."\n"
@@ -925,7 +928,7 @@ abstract class AbstractFormat implements FormatInterface, OptionInterface
                 ).
                 '        $__local_pug_ref = &$GLOBALS[$__local_pug_key];'."\n".
                 '        $__local_pug_value = &$__pug_children_vars[$__local_pug_key];'."\n".
-                '        if($__local_pug_ref !== $__local_pug_value){'."\n".
+                '        if ($__local_pug_ref !== $__local_pug_value) {'."\n".
                 '            $$__local_pug_key = &$__local_pug_value;'."\n".
                 '            continue;'."\n".
                 '        }'."\n".

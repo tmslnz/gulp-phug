@@ -30,7 +30,7 @@ class AttributeScanner implements ScannerInterface
         $expression = preg_replace('/
                 "(?:\\\\[\\S\\s]|[^"\\\\])*"|
                 \'(?:\\\\[\\S\\s]|[^\'\\\\])*\'
-            /x', '0', $expression);
+            /x', '0', (string) $expression);
         $expression = preg_replace('/\\s*(
                 (\\[([^\\[\\]]+|(?1))*\\]) |
                 (\\(([^\\(\\)]+|(?1))*\\)) |
@@ -42,6 +42,8 @@ class AttributeScanner implements ScannerInterface
 
     private function isTruncatedExpression(Reader $reader, &$expression)
     {
+        $expression = (string) $expression;
+
         if (mb_substr($expression, -3) === 'new' || mb_substr($expression, -5) === 'clone') {
             $expression .= $reader->getLastPeekResult();
             $reader->consume();
@@ -118,13 +120,15 @@ class AttributeScanner implements ScannerInterface
         return $expression;
     }
 
-    private function readAttributeValue(Reader $reader, AttributeToken $token)
+    private function readAttributeValue(Reader $reader, AttributeToken $token, $expression = '')
     {
-        $expression = $this->getAttributeValue($reader);
+        $expression .= $this->getAttributeValue($reader);
+
         while ($this->isTruncatedExpression($reader, $expression)) {
             $this->skipComments($reader);
             $expression .= $this->getAttributeValue($reader);
         }
+
         $token->setValue($expression);
 
         //Ignore a comma if found
@@ -210,7 +214,7 @@ class AttributeScanner implements ScannerInterface
         $token->escape();
         $token->check();
 
-        if ($variadic = $reader->peekString('...')) {
+        if ($reader->peekString('...')) {
             $token->setIsVariadic(true);
             $reader->consume();
         }
@@ -218,9 +222,17 @@ class AttributeScanner implements ScannerInterface
         return $token;
     }
 
-    private function seedAttributeToken(State $state, AttributeToken $token, $expression)
+    private function seedAttributeToken(State $state, AttributeToken $token, $expression, array $options)
     {
         $reader = $state->getReader();
+        $allowName = isset($options['allow_name']) ? $options['allow_name'] : true;
+
+        if (!$allowName) {
+            $this->readAttributeValue($reader, $token, $expression);
+            $this->skipComments($reader);
+
+            return;
+        }
 
         $token->setName($expression);
 
@@ -252,7 +264,7 @@ class AttributeScanner implements ScannerInterface
         }
     }
 
-    private function scanParenthesesContent(State $state)
+    private function scanParenthesesContent(State $state, array $options)
     {
         $reader = $state->getReader();
 
@@ -263,7 +275,7 @@ class AttributeScanner implements ScannerInterface
                 continue;
             }
 
-            $this->seedAttributeToken($state, $token, $expression);
+            $this->seedAttributeToken($state, $token, $expression, $options);
 
             yield $token;
 
@@ -275,7 +287,7 @@ class AttributeScanner implements ScannerInterface
         }
     }
 
-    private function scanParentheses(State $state)
+    private function scanParentheses(State $state, array $options)
     {
         $reader = $state->getReader();
 
@@ -283,7 +295,7 @@ class AttributeScanner implements ScannerInterface
             return;
         }
 
-        foreach ($this->scanParenthesesContent($state) as $token) {
+        foreach ($this->scanParenthesesContent($state, $options) as $token) {
             yield $token;
         }
 
@@ -294,7 +306,7 @@ class AttributeScanner implements ScannerInterface
         }
     }
 
-    public function scan(State $state)
+    public function scan(State $state, array $options = [])
     {
         $reader = $state->getReader();
 
@@ -307,7 +319,7 @@ class AttributeScanner implements ScannerInterface
         $reader->consume();
         yield $state->endToken($start);
 
-        foreach ($this->scanParentheses($state) as $token) {
+        foreach ($this->scanParentheses($state, $options) as $token) {
             yield $token;
         }
 

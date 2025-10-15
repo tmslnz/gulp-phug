@@ -23,11 +23,11 @@ class ImportNodeCompiler extends AbstractNodeCompiler
     protected function isPugImport($path)
     {
         $compiler = $this->getCompiler();
-        $extension = pathinfo($path, PATHINFO_EXTENSION) ?: '';
+        $extension = pathinfo((string) $path, PATHINFO_EXTENSION);
         $extensions = $compiler->getOption('extensions');
 
         if ($extension === '') {
-            return in_array('', $extensions);
+            return in_array('', $extensions, true);
         }
 
         if (!$compiler->getOption('allow_composite_extensions')) {
@@ -72,7 +72,7 @@ class ImportNodeCompiler extends AbstractNodeCompiler
 
         $paths = $isAbsolutePath
             ? null
-            : [dirname($compiler->getPath()) ?: '.'];
+            : [dirname((string) $compiler->getPath()) ?: '.'];
 
         $path = $compiler->resolve($node->getPath(), $paths);
         $compiler->registerImportPath($path);
@@ -135,7 +135,7 @@ class ImportNodeCompiler extends AbstractNodeCompiler
                 'input',
                 'meta',
                 'hr',
-            ])) {
+            ], true)) {
                 $yield = $yield->getParent();
             }
             if ($compiler->getImportNode()) {
