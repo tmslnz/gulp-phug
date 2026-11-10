@@ -1,6 +1,6 @@
 {
   "name": "gulp-phug",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Pug to PHP template compiler using phug",
   "main": "index.js",
   "bin": "./support/vendor/phug/phug/phug",
@@ -29,7 +29,7 @@
     "url": "https://github.com/tmslnz/gulp-phug/issues"
   },
   "homepage": "https://github.com/tmslnz/gulp-phug#readme",
-  "devDependencies": {
+  "dependencies": {
     "plugin-error": "2.0.1",
     "through2": "4.0.2"
   }
