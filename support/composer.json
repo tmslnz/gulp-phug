@@ -1,5 +1,5 @@
 {
     "require": {
-        "phug/phug": "^1.13.0"
+        "phug/phug": "^2.0"
     }
 }

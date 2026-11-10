@@ -25,14 +25,14 @@ const compile = (file, callback, options) => {
 
   command.on('error', function(error) {
     let err = new PluginError(PLUGIN_NAME, `Failed to spawn PHP: ${error.message}`);
-    return callback(err, file);
+    return callback(err);
   });
 
   command.on('close', function(code) {
     if (code > 0) {
       let errorMessage = Buffer.concat(stderr).toString() || Buffer.concat(stdout).toString();
       let err = new PluginError(PLUGIN_NAME, errorMessage);
-      return callback(err, file);
+      return callback(err);
     }
     file.contents = Buffer.concat(stdout);
     file.path = file.path.replace(/\.(jade|jd|pug)$/, '.php');

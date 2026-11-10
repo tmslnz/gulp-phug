@@ -23,6 +23,10 @@ module.exports = {
 };
 ```
 
+## Requirements
+
+PHP 7.1 or later must be available on your `PATH` (Phug 2 dropped support for older versions).
+
 ## Development Setup
 
 Uses `composer` which can be installed via Homebrew with `brew install composer`.
