@@ -23,11 +23,37 @@ module.exports = {
 };
 ```
 
+## Options
+
+### `debug`
+
+Type: `boolean`, default: `false`
+
+Compiles templates in Phug's debug mode. Debug output adds profiler calls and `PUG_DEBUG` markers to every line, which let Phug's own renderer map runtime errors back to `.pug` line numbers. It also makes the compiled PHP depend on the Phug runtime, so the server must have Phug installed (see [Using with WordPress](#using-with-wordpress)).
+
+With debug off, the compiled PHP is self-contained and runs without Phug.
+
+```js
+.pipe(pug({ debug: true }))
+```
+
+When the option is not set, the plugin reads the `GULP_PHUG_DEBUG` environment variable (`1`, `true`, `yes` or `on` enable it). The option takes precedence over the variable.
+
+```bash
+GULP_PHUG_DEBUG=1 npx gulp
+```
+
+## Requirements
+
+PHP 7.1 or later must be available on your `PATH` (Phug 2 dropped support for older versions).
+
 ## Development Setup
 
 Uses `composer` which can be installed via Homebrew with `brew install composer`.
 
 ## Using with WordPress
+
+The compiled templates need Phug on the server only when compiled with `debug: true`. Without debug mode, WordPress can include them directly and these steps are unnecessary.
 
 1. Install [`composer`](https://getcomposer.org) (PHP's package manager) on your system;
 2. Create a folder `mu-plugins` inside `wp-content`;

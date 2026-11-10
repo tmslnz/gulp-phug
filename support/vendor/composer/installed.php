@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'b9d4340f5051d2c0e76af9aee6fba5960b8d55f4',
+        'reference' => 'd77b76d06214607375d31d5d933979740fa6d099',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'b9d4340f5051d2c0e76af9aee6fba5960b8d55f4',
+            'reference' => 'd77b76d06214607375d31d5d933979740fa6d099',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -22,61 +22,61 @@
         'phug/ast' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.13.0',
+                0 => '2.0.1',
             ),
         ),
         'phug/compiler' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.13.0',
+                0 => '2.0.1',
             ),
         ),
         'phug/dependency-injection' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.13.0',
+                0 => '2.0.1',
             ),
         ),
         'phug/event' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.13.0',
+                0 => '2.0.1',
             ),
         ),
         'phug/facade' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.13.0',
+                0 => '2.0.1',
             ),
         ),
         'phug/formatter' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.13.0',
+                0 => '2.0.1',
             ),
         ),
         'phug/invoker' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.13.0',
+                0 => '2.0.1',
             ),
         ),
         'phug/lexer' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.13.0',
+                0 => '2.0.1',
             ),
         ),
         'phug/parser' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.13.0',
+                0 => '2.0.1',
             ),
         ),
         'phug/phug' => array(
-            'pretty_version' => '1.13.0',
-            'version' => '1.13.0.0',
-            'reference' => '6c7b618adabd1b4c14a0733920fac561449ecd8c',
+            'pretty_version' => '2.0.1',
+            'version' => '2.0.1.0',
+            'reference' => '0260cba390265e2d087a7a4a083072dbaa9de0eb',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phug/phug',
             'aliases' => array(),
@@ -85,19 +85,19 @@
         'phug/reader' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.13.0',
+                0 => '2.0.1',
             ),
         ),
         'phug/renderer' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.13.0',
+                0 => '2.0.1',
             ),
         ),
         'phug/util' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.13.0',
+                0 => '2.0.1',
             ),
         ),
         'symfony/deprecation-contracts' => array(
