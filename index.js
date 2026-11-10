@@ -5,13 +5,26 @@ const path = require('path');
 
 const PLUGIN_NAME = 'gulp-phug';
 
+const isTruthy = (value) => /^(1|true|yes|on)$/i.test(String(value).trim());
+
+// Explicit option first, then the GULP_PHUG_DEBUG environment variable, then off.
+const resolveDebug = (options) => {
+  if (options.debug !== undefined) return Boolean(options.debug);
+  if (process.env.GULP_PHUG_DEBUG !== undefined) return isTruthy(process.env.GULP_PHUG_DEBUG);
+  return false;
+};
+
 const compile = (file, callback, options) => {
   let args = [
     '-d', 'error_reporting=E_ERROR',
     path.join(__dirname, 'support', 'vendor', 'phug', 'phug', 'phug'),
     'compileFile', file.path,
+    '--bootstrap', path.join(__dirname, 'support', 'bootstrap.php'),
   ];
-  let command = spawn( 'php', args);
+  let env = Object.assign({}, process.env, {
+    GULP_PHUG_DEBUG: resolveDebug(options) ? '1' : '0',
+  });
+  let command = spawn( 'php', args, { env });
   let stdout = [];
   let stderr = [];
 
