@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "vendor": "composer install -d support --no-dev --optimize-autoloader",
-    "release": "npm version",
+    "release": "npm version --ignore-scripts=false",
     "version": "npm run vendor && git add -A support",
     "postversion": "git push --follow-tags && npm publish"
   },
