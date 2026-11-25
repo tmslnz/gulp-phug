@@ -1,5 +1,10 @@
 {
-    "require": {
-        "phug/phug": "^2.0"
+  "require": {
+    "phug/phug": "^2.0"
+  },
+  "config": {
+    "platform": {
+      "php": "7.3"
     }
+  }
 }
