@@ -11,7 +11,6 @@
 
 namespace Symfony\Component\VarDumper\Command;
 
-use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Completion\CompletionInput;
 use Symfony\Component\Console\Completion\CompletionSuggestions;
@@ -35,16 +34,19 @@ use Symfony\Component\VarDumper\Server\DumpServer;
  *
  * @final
  */
-#[AsCommand(name: 'server:dump', description: 'Start a dump server that collects and displays dumps in a single place')]
 class ServerDumpCommand extends Command
 {
-    /** @var DumpDescriptorInterface[] */
-    private array $descriptors;
+    protected static $defaultName = 'server:dump';
+    protected static $defaultDescription = 'Start a dump server that collects and displays dumps in a single place';
 
-    public function __construct(
-        private DumpServer $server,
-        array $descriptors = [],
-    ) {
+    private $server;
+
+    /** @var DumpDescriptorInterface[] */
+    private $descriptors;
+
+    public function __construct(DumpServer $server, array $descriptors = [])
+    {
+        $this->server = $server;
         $this->descriptors = $descriptors + [
             'cli' => new CliDescriptor(new CliDumper()),
             'html' => new HtmlDescriptor(new HtmlDumper()),
@@ -53,10 +55,11 @@ class ServerDumpCommand extends Command
         parent::__construct();
     }
 
-    protected function configure(): void
+    protected function configure()
     {
         $this
-            ->addOption('format', null, InputOption::VALUE_REQUIRED, \sprintf('The output format (%s)', implode(', ', $this->getAvailableFormats())), 'cli')
+            ->addOption('format', null, InputOption::VALUE_REQUIRED, sprintf('The output format (%s)', implode(', ', $this->getAvailableFormats())), 'cli')
+            ->setDescription(self::$defaultDescription)
             ->setHelp(<<<'EOF'
 <info>%command.name%</info> starts a dump server that collects and displays
 dumps in a single place for debugging you application:
@@ -79,7 +82,7 @@ EOF
         $format = $input->getOption('format');
 
         if (!$descriptor = $this->descriptors[$format] ?? null) {
-            throw new InvalidArgumentException(\sprintf('Unsupported format "%s".', $format));
+            throw new InvalidArgumentException(sprintf('Unsupported format "%s".', $format));
         }
 
         $errorIo = $io->getErrorStyle();
@@ -87,7 +90,7 @@ EOF
 
         $this->server->start();
 
-        $errorIo->success(\sprintf('Server listening on %s', $this->server->getHost()));
+        $errorIo->success(sprintf('Server listening on %s', $this->server->getHost()));
         $errorIo->comment('Quit the server with CONTROL-C.');
 
         $this->server->listen(function (Data $data, array $context, int $clientId) use ($descriptor, $io) {

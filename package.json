@@ -5,7 +5,14 @@
   "main": "index.js",
   "bin": "./support/vendor/phug/phug/phug",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "vendor": "composer install -d support --no-dev --optimize-autoloader",
+    "release": "npm version",
+    "version": "npm run vendor && git add -A support",
+    "postversion": "git push --follow-tags && npm publish"
+  },
+  "engines": {
+    "php": ">=7.3"
   },
   "repository": {
     "type": "git",

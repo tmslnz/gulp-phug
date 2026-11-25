@@ -11,7 +11,6 @@
 
 namespace Symfony\Component\VarDumper\Caster;
 
-use Relay\Relay;
 use Symfony\Component\VarDumper\Cloner\Stub;
 
 /**
@@ -20,21 +19,19 @@ use Symfony\Component\VarDumper\Cloner\Stub;
  * @author Nicolas Grekas <p@tchwork.com>
  *
  * @final
- *
- * @internal since Symfony 7.3
  */
 class RedisCaster
 {
     private const SERIALIZERS = [
-        0 => 'NONE', // Redis::SERIALIZER_NONE
-        1 => 'PHP', // Redis::SERIALIZER_PHP
+        \Redis::SERIALIZER_NONE => 'NONE',
+        \Redis::SERIALIZER_PHP => 'PHP',
         2 => 'IGBINARY', // Optional Redis::SERIALIZER_IGBINARY
     ];
 
     private const MODES = [
-        0 => 'ATOMIC', // Redis::ATOMIC
-        1 => 'MULTI', // Redis::MULTI
-        2 => 'PIPELINE', // Redis::PIPELINE
+        \Redis::ATOMIC => 'ATOMIC',
+        \Redis::MULTI => 'MULTI',
+        \Redis::PIPELINE => 'PIPELINE',
     ];
 
     private const COMPRESSION_MODES = [
@@ -49,7 +46,7 @@ class RedisCaster
         \RedisCluster::FAILOVER_DISTRIBUTE_SLAVES => 'DISTRIBUTE_SLAVES',
     ];
 
-    public static function castRedis(\Redis|Relay $c, array $a, Stub $stub, bool $isNested): array
+    public static function castRedis(\Redis $c, array $a, Stub $stub, bool $isNested)
     {
         $prefix = Caster::PREFIX_VIRTUAL;
 
@@ -75,7 +72,7 @@ class RedisCaster
         ];
     }
 
-    public static function castRedisArray(\RedisArray $c, array $a, Stub $stub, bool $isNested): array
+    public static function castRedisArray(\RedisArray $c, array $a, Stub $stub, bool $isNested)
     {
         $prefix = Caster::PREFIX_VIRTUAL;
 
@@ -87,7 +84,7 @@ class RedisCaster
         ];
     }
 
-    public static function castRedisCluster(\RedisCluster $c, array $a, Stub $stub, bool $isNested): array
+    public static function castRedisCluster(\RedisCluster $c, array $a, Stub $stub, bool $isNested)
     {
         $prefix = Caster::PREFIX_VIRTUAL;
         $failover = $c->getOption(\RedisCluster::OPT_SLAVE_FAILOVER);
@@ -105,9 +102,12 @@ class RedisCaster
         return $a;
     }
 
-    private static function getRedisOptions(\Redis|Relay|\RedisArray|\RedisCluster $redis, array $options = []): EnumStub
+    /**
+     * @param \Redis|\RedisArray|\RedisCluster $redis
+     */
+    private static function getRedisOptions($redis, array $options = []): EnumStub
     {
-        $serializer = $redis->getOption(\defined('Redis::OPT_SERIALIZER') ? \Redis::OPT_SERIALIZER : 1);
+        $serializer = $redis->getOption(\Redis::OPT_SERIALIZER);
         if (\is_array($serializer)) {
             foreach ($serializer as &$v) {
                 if (isset(self::SERIALIZERS[$v])) {
@@ -139,11 +139,11 @@ class RedisCaster
         }
 
         $options += [
-            'TCP_KEEPALIVE' => \defined('Redis::OPT_TCP_KEEPALIVE') ? $redis->getOption(\Redis::OPT_TCP_KEEPALIVE) : Relay::OPT_TCP_KEEPALIVE,
-            'READ_TIMEOUT' => $redis->getOption(\defined('Redis::OPT_READ_TIMEOUT') ? \Redis::OPT_READ_TIMEOUT : Relay::OPT_READ_TIMEOUT),
+            'TCP_KEEPALIVE' => \defined('Redis::OPT_TCP_KEEPALIVE') ? $redis->getOption(\Redis::OPT_TCP_KEEPALIVE) : 0,
+            'READ_TIMEOUT' => $redis->getOption(\Redis::OPT_READ_TIMEOUT),
             'COMPRESSION' => $compression,
             'SERIALIZER' => $serializer,
-            'PREFIX' => $redis->getOption(\defined('Redis::OPT_PREFIX') ? \Redis::OPT_PREFIX : Relay::OPT_PREFIX),
+            'PREFIX' => $redis->getOption(\Redis::OPT_PREFIX),
             'SCAN' => $retry,
         ];
 

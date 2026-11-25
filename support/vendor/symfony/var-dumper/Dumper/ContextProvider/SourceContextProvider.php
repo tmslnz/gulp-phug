@@ -11,7 +11,7 @@
 
 namespace Symfony\Component\VarDumper\Dumper\ContextProvider;
 
-use Symfony\Component\ErrorHandler\ErrorRenderer\FileLinkFormatter;
+use Symfony\Component\HttpKernel\Debug\FileLinkFormatter;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Symfony\Component\VarDumper\VarDumper;
@@ -25,12 +25,17 @@ use Twig\Template;
  */
 final class SourceContextProvider implements ContextProviderInterface
 {
-    public function __construct(
-        private ?string $charset = null,
-        private ?string $projectDir = null,
-        private ?FileLinkFormatter $fileLinkFormatter = null,
-        private int $limit = 9,
-    ) {
+    private $limit;
+    private $charset;
+    private $projectDir;
+    private $fileLinkFormatter;
+
+    public function __construct(?string $charset = null, ?string $projectDir = null, ?FileLinkFormatter $fileLinkFormatter = null, int $limit = 9)
+    {
+        $this->charset = $charset;
+        $this->projectDir = $projectDir;
+        $this->fileLinkFormatter = $fileLinkFormatter;
+        $this->limit = $limit;
     }
 
     public function getContext(): ?array
